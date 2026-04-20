@@ -1,0 +1,22 @@
+{
+  "emulator": {
+    "type": "leidian",
+    "adb_path": "adb",
+    "devices": [
+      {"serial": "emulator-5554", "name": "雷电模拟器1"}
+    ]
+  },
+  "resolution": {"width": 1280, "height": 720},
+  "hotkeys": {
+    "start": "F9",
+    "pause": "F10",
+    "stop": "F11"
+  },
+  "default_threshold": 0.85,
+  "retry_count": 3,
+  "retry_interval_ms": 1000,
+  "random_delay": {"min_ms": 300, "max_ms": 800},
+  "click_offset": 5,
+  "log_level": "INFO",
+  "ocr_engine": "paddleocr"
+}
