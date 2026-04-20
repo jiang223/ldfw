@@ -110,7 +110,10 @@ class FlowEngine:
                     random_ms = node.get("random_ms")
                     if not isinstance(random_ms, (list, tuple)) or len(random_ms) != 2:
                         raise ValueError("random_ms must be a list/tuple with exactly 2 integer values [min_ms, max_ms]")
-                    min_ms, max_ms = int(random_ms[0]), int(random_ms[1])
+                    try:
+                        min_ms, max_ms = int(random_ms[0]), int(random_ms[1])
+                    except (TypeError, ValueError) as exc:
+                        raise ValueError("random_ms must contain numeric integer values [min_ms, max_ms]") from exc
                     if min_ms > max_ms:
                         raise ValueError(f"random_ms format invalid: min_ms ({min_ms}) must be <= max_ms ({max_ms})")
                     random_delay(min_ms, max_ms)

@@ -5,6 +5,8 @@ from typing import Callable, List
 
 from core.logger import get_logger
 
+MIN_TASK_INTERVAL_SEC = 0.1
+
 
 @dataclass
 class ScheduledTask:
@@ -46,6 +48,6 @@ class TaskScheduler:
                         task.callback()
                     except Exception as exc:
                         self.logger.error(f"任务执行失败 {task.name}: {exc}")
-                    interval = max(0.1, float(task.interval_sec))
+                    interval = max(MIN_TASK_INTERVAL_SEC, float(task.interval_sec))
                     next_run[task.name] = now + interval
             time.sleep(0.2)

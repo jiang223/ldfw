@@ -2,6 +2,9 @@ import random
 import time
 from typing import Tuple
 
+HUMAN_DELAY_MIN_MS = 300
+HUMAN_DELAY_MAX_MS = 800
+
 
 def random_delay(min_ms: int, max_ms: int) -> None:
     """随机延时。"""
@@ -18,4 +21,4 @@ def random_offset(x: int, y: int, max_offset: int = 5) -> Tuple[int, int]:
 
 def human_like_delay() -> None:
     """模拟人类操作节奏。"""
-    random_delay(300, 800)
+    random_delay(HUMAN_DELAY_MIN_MS, HUMAN_DELAY_MAX_MS)
