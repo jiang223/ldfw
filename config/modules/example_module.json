@@ -1,0 +1,110 @@
+{
+  "id": "module_daily",
+  "name": "日常挂机示例模块",
+  "enabled": true,
+  "flows": [
+    {
+      "id": "flow_check_home",
+      "name": "流程1-主界面检测",
+      "enabled": true,
+      "on_error": "skip",
+      "nodes": [
+        {
+          "id": "node_if_home",
+          "type": "IF_CHECK",
+          "template_path": "assets/images/common/home.png",
+          "threshold": 0.85,
+          "region": [0, 0, 1280, 720],
+          "true_nodes": [
+            {
+              "id": "node_click_battle",
+              "type": "CLICK",
+              "position": [1120, 640],
+              "offset": 5
+            },
+            {
+              "id": "node_log_enter",
+              "type": "LOG",
+              "message": "检测到主界面，已点击进入战斗。"
+            }
+          ],
+          "false_nodes": [
+            {
+              "id": "node_log_not_home",
+              "type": "LOG",
+              "message": "未检测到主界面，等待弹窗处理流程。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flow_battle_loop",
+      "name": "流程2-战斗循环",
+      "enabled": true,
+      "on_error": "retry",
+      "nodes": [
+        {
+          "id": "node_while_battle",
+          "type": "WHILE_LOOP",
+          "condition_template": "assets/images/common/battle.png",
+          "threshold": 0.82,
+          "max_loops": 30,
+          "body_nodes": [
+            {
+              "id": "node_click_auto",
+              "type": "CLICK",
+              "position": [1180, 90],
+              "offset": 4
+            },
+            {
+              "id": "node_delay_loop",
+              "type": "DELAY",
+              "random_ms": [700, 1400]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flow_popup_handle",
+      "name": "流程3-弹窗处理",
+      "enabled": true,
+      "on_error": "skip",
+      "nodes": [
+        {
+          "id": "node_find_reward",
+          "type": "FIND_IMAGE",
+          "template_path": "assets/images/common/reward.png",
+          "save_as": "reward_pos",
+          "threshold": 0.86
+        },
+        {
+          "id": "node_if_reward_click",
+          "type": "IF_CHECK",
+          "template_path": "assets/images/common/reward.png",
+          "threshold": 0.86,
+          "true_nodes": [
+            {
+              "id": "node_click_reward",
+              "type": "CLICK",
+              "target_from_context": "reward_pos"
+            },
+            {
+              "id": "node_log_reward",
+              "type": "LOG",
+              "message": "发现奖励弹窗，已点击领取。"
+            }
+          ],
+          "false_nodes": [
+            {
+              "id": "node_key_back",
+              "type": "KEY_EVENT",
+              "key": "back"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
