@@ -11,7 +11,7 @@ MIN_TASK_INTERVAL_SEC = 0.1
 @dataclass
 class ScheduledTask:
     name: str
-    interval_sec: int
+    interval_sec: float
     callback: Callable[[], None]
     enabled: bool = True
 

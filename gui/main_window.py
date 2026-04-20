@@ -244,7 +244,7 @@ class MainWindow(QMainWindow):
         flow_name, ok = QInputDialog.getText(self, "新增流程", "流程名称", text=default_name)
         if not ok:
             return
-        normalized_name = (flow_name.strip() if flow_name else "") or default_name
+        normalized_name = (flow_name or "").strip() or default_name
         self.module_manager.add_flow(module.id, normalized_name)
         self.modules = self.module_manager.load_modules()
         self._refresh_module_list()
