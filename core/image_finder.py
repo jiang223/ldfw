@@ -77,7 +77,7 @@ class ImageFinder:
                     return False
                 b, g, r = screenshot[y, x]
                 exp_r, exp_g, exp_b = [int(v) for v in rgb]
-                if any(abs(a - b_) > tolerance for a, b_ in ((r, exp_r), (g, exp_g), (b, exp_b))):
+                if any(abs(actual_val - expected_val) > tolerance for actual_val, expected_val in ((r, exp_r), (g, exp_g), (b, exp_b))):
                     return False
             return True
         except Exception as exc:

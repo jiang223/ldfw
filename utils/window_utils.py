@@ -14,10 +14,10 @@ def find_window(title_keyword: str) -> Optional[int]:
 
     result = []
 
-    def _enum(hwnd, _):
+    def _window_enum_handler(hwnd, _):
         title = win32gui.GetWindowText(hwnd)
         if title_keyword.lower() in title.lower():
             result.append(hwnd)
 
-    win32gui.EnumWindows(_enum, None)
+    win32gui.EnumWindows(_window_enum_handler, None)
     return result[0] if result else None

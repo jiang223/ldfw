@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import (
     QListWidgetItem,
     QMainWindow,
     QMessageBox,
+    QInputDialog,
     QPushButton,
     QSplitter,
     QTextEdit,
@@ -239,7 +240,11 @@ class MainWindow(QMainWindow):
         module = self._get_selected_module()
         if not module:
             return
-        self.module_manager.add_flow(module.id, f"新流程{len(module.flows) + 1}")
+        default_name = f"新流程{len(module.flows) + 1}"
+        flow_name, ok = QInputDialog.getText(self, "新增流程", "流程名称", text=default_name)
+        if not ok:
+            return
+        self.module_manager.add_flow(module.id, (flow_name or default_name).strip())
         self.modules = self.module_manager.load_modules()
         self._refresh_module_list()
 

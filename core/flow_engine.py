@@ -107,7 +107,10 @@ class FlowEngine:
 
             if node_type == NodeType.DELAY:
                 if "random_ms" in node:
-                    random_delay(int(node["random_ms"][0]), int(node["random_ms"][1]))
+                    random_ms = node.get("random_ms")
+                    if not isinstance(random_ms, (list, tuple)) or len(random_ms) < 2:
+                        raise ValueError("random_ms must be a list/tuple of [min, max] values")
+                    random_delay(int(random_ms[0]), int(random_ms[1]))
                 else:
                     time.sleep(max(0, int(node.get("delay_ms", 0))) / 1000.0)
                 return True
