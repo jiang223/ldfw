@@ -46,5 +46,6 @@ class TaskScheduler:
                         task.callback()
                     except Exception as exc:
                         self.logger.error(f"任务执行失败 {task.name}: {exc}")
-                    next_run[task.name] = now + max(1, int(task.interval_sec))
+                    interval = max(0.1, float(task.interval_sec))
+                    next_run[task.name] = now + interval
             time.sleep(0.2)
